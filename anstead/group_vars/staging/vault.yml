@@ -1,0 +1,24 @@
+vault_mysql_root_password: stagingpw 
+
+vault_redis_password: stagingpw
+
+vault_stripe_key: stripekey
+vault_stripe_secret: stripesecret
+
+vault_users:
+  - name: "{{ admin_user }}"
+    password: example_password
+    salt: "generateme"
+
+# Variables to accompany `group_vars/staging/laravel_apps.yml`
+# Note: the site name (`example.com`) must match up with the site name in the above file.
+vault_laravel_apps:
+  example.com:
+    env:
+      db_connection: mysql
+      db_host: "internal-ip"
+      db_port: "3306"
+      db_database: example_com_production
+      db_username: example
+      db_password: password
+      app_key: "generateme"

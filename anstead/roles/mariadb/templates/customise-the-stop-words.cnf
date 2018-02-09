@@ -1,0 +1,3 @@
+# {{ ansible_managed }}
+[mysqld]
+ft_stopword_file = "/etc/mysql/stop-words.txt"

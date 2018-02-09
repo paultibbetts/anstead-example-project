@@ -1,0 +1,14 @@
+---
+- name: Install Supervisor
+  apt:
+    name: supervisor
+    state: present
+
+- name: Enable Supervisor
+  service: name=supervisor state=started enabled=yes
+
+- name: Write config file
+  template:
+    src: laravel-workers.j2
+    dest: /etc/supervisor/conf.d/laravel-workers.conf
+  notify: restart supervisor

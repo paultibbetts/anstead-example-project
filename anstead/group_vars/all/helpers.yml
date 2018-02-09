@@ -1,0 +1,36 @@
+laravel_env_defaults:
+  app_debug: false
+  app_env: "{{ env }}"
+  app_key: "base64:f7NFHkkfMoAYOYLgftNWpeHVxhOmMBJKvecVE2igK3A="
+  # app_url: http://example.test
+  db_database: "{{ item.key | underscore }}_{{ env }}"
+  db_username: "{{ item.key | underscore }}"
+  db_user_host: localhost
+  db_host: localhost
+  db_connection: mysql
+  db_port: 3306
+  db_password: "{{ vault_db_password }}"
+  disable_app_cron: true
+  domain_current_site: "{{ site_hosts_canonical | first }}"
+  cache_driver: redis
+  session_driver: redis
+  queue_driver: redis
+  redis_host: 127.0.0.1
+  redis_password: "{{ vault_redis_password }}"
+  redis_port: 6379
+  mail_driver: smtp
+  mail_host: 127.0.0.1
+  mail_port: 1025
+  mail_user: testuser
+  mail_password: testpwd
+  mail_encryption: "null"
+  authy_secret:
+  stripe_key: "{{ vault_stripe_key }}"
+  stripe_secret: "{{ vault_stripe_secret }}"
+
+site_env: "{{ laravel_env_defaults | combine(item.value.env | default({}), vault_laravel_apps[item.key].env) }}"
+site_hosts_canonical: "{{ item.value.site_hosts | map(attribute='canonical') | list }}"
+site_hosts_redirects: "{{ item.value.site_hosts | selectattr('redirects', 'defined') | sum(attribute='redirects', start=[]) | list }}"
+site_hosts: "{{ site_hosts_canonical | union(site_hosts_redirects) }}"
+ssl_enabled: "{{ item.value.ssl is defined and item.value.ssl.enabled | default(false) }}"
+ssl_stapling_enabled: "{{ item.value.ssl is defined and item.value.ssl.stapling_enabled | default(true) }}"

@@ -1,0 +1,4 @@
+---
+- import_playbook: database.yml
+- import_playbook: redis.yml
+- import_playbook: app.yml

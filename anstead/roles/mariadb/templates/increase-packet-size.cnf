@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+[mysql]
+max_allowed_packet=512M

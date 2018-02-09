@@ -1,0 +1,37 @@
+---
+- name: Run the migrations
+  command: "/usr/bin/php artisan migrate --force chdir={{ deploy_helper.new_release_path }}"
+  with_dict: "{{ laravel_apps }}"
+
+- name: Link the storage directory
+  command: "/usr/bin/php artisan storage:link chdir={{ deploy_helper.new_release_path }}"
+  with_dict: "{{ laravel_apps }}"
+
+- name: Reload php-fpm
+  shell: sudo service php7.1-fpm reload
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+    warn: false
+
+- name: Update queue workers
+  shell: sudo supervisorctl reread && sudo supervisorctl update
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+    warn: false
+
+- name: Restart all queue workers
+  shell: /usr/bin/php artisan queue:restart chdir={{ deploy_helper.new_release_path }}
+
+- name: Get latest commit message
+  command: git log -1 --pretty=format:"%h %B"
+  args:
+      chdir: "{{ project_source_path }}"
+  register: latest_commit_message
+
+# - name: Send notification to Slack
+#   slack:
+#     token: T0UBNLNV8/B57890EKX/y3RrvWjTjTiqSSMDD4C6l45n
+#     msg: "#{{ latest_commit_message.stdout }}"
+#     username: 'Deployment'
+#     channel: '#code'
+#   delegate_to: localhost

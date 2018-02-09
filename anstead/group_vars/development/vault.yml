@@ -1,0 +1,14 @@
+vault_mysql_root_password: devpw
+vault_mysql_readonly_password: devpw
+vault_mysql_remote_password: devpw
+
+# Variables to accompany `group_vars/development/laravel_apps.yml`
+vault_laravel_apps:
+  example.com:
+    env:
+      db_connection: mysql
+      db_host: localhost
+      db_port: 3306
+      db_username: example
+      db_password: devpw
+      app_debug: True
