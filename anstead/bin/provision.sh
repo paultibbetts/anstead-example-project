@@ -24,7 +24,7 @@ Examples:
 
 PROVISION_CMD="ansible-playbook provision.yml -e env=$1"
 # if root is not allowed to login, switch the provision command for the below
-# PROVISION_CMD="ansible-playbook server.yml -e env=$1 --ask-become-pass"
+# PROVISION_CMD="ansible-playbook provision.yml -e env=$1 --ask-become-pass"
 
 if [[ ! -e $HOSTS_FILE ]]; then
   echo "Error: $1 is not a valid environment ($HOSTS_FILE does not exist)."

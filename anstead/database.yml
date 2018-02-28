@@ -1,25 +1,14 @@
 ---
-- import_playbook: common.yml
-- import_playbook: variable-check.yml
-  vars:
-    playbook: database.yml
-
-- name: Database
+- name: "Database"
   hosts: database:&{{ env }}
   become: yes
   vars: 
     ferm_input_list:
-    - type: dport_accept
-      dport: [ssh]
-      saddr: "{{ ip_whitelist }}"
-    - type: dport_limit
-      dport: [ssh]
-      seconds: 300
-      hits: 20
-    - type: dport_accept
-      dport: ["3306"]
-      filename: database_accept
+      - type: dport_accept
+        dport: ["3306"] 
+        filename: database_accept
+        when: apps_using_remote_db | count
   roles:
     - { role: ferm, tags: [ferm] }
-    - { role: mariadb, tags: [mariadb] }
+    - { role: mariadb-server, tags: [mariadb, mariadb-server] }
     - { role: laravel-setup-database, tags: [laravel, laravel-setup-database] }

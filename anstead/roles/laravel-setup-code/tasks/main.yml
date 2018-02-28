@@ -41,6 +41,9 @@
 - import_tasks: nginx.yml
   tags: laravel-setup-nginx
 
+- import_tasks: supervisor.yml
+  tags: laravel-setup-supervisor
+
 - name: Setup Laravel system cron
   cron:
     name: "{{ item.key }} Laravel Artisan scheduler"

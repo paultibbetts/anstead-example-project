@@ -31,7 +31,7 @@ class AddJobToJobsTable implements ShouldQueue
     public function handle()
     {
         $job = new Job();
-        sleep(rand(1, 5));
+        sleep(rand(1, 3));
         $job->save();
     }
 }

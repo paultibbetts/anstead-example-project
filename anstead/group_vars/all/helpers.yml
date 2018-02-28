@@ -1,17 +1,15 @@
 laravel_env_defaults:
   app_debug: false
   app_env: "{{ env }}"
-  app_key: "base64:f7NFHkkfMoAYOYLgftNWpeHVxhOmMBJKvecVE2igK3A="
-  # app_url: http://example.test
+  app_key: "" # this is automatically set by artisan key:generate on installation
+  app_url: http://example.test
   db_database: "{{ item.key | underscore }}_{{ env }}"
   db_username: "{{ item.key | underscore }}"
   db_user_host: localhost
   db_host: localhost
   db_connection: mysql
   db_port: 3306
-  db_password: "{{ vault_db_password }}"
   disable_app_cron: true
-  domain_current_site: "{{ site_hosts_canonical | first }}"
   cache_driver: redis
   session_driver: redis
   queue_driver: redis
@@ -24,9 +22,6 @@ laravel_env_defaults:
   mail_user: testuser
   mail_password: testpwd
   mail_encryption: "null"
-  authy_secret:
-  stripe_key: "{{ vault_stripe_key }}"
-  stripe_secret: "{{ vault_stripe_secret }}"
 
 site_env: "{{ laravel_env_defaults | combine(item.value.env | default({}), vault_laravel_apps[item.key].env) }}"
 site_hosts_canonical: "{{ item.value.site_hosts | map(attribute='canonical') | list }}"

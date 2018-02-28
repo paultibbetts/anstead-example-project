@@ -9,5 +9,5 @@ laravel_apps:
     ssl:
       enabled: true
       provider: self-signed
-    cache:
-      enabled: false
+    env:
+      app_debug: true

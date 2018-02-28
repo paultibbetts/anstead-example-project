@@ -19,18 +19,20 @@
                     </div>
 
                     <div style="margin: 1rem auto">
-                        <button class="add button" v-if="! processing" @click="newJob">
-                            New job
-                        </button>
-                        <button class="remove button" v-if="jobs.length >= 20" @click="removeJobs">
-                            Clear
-                        </button>
-                        <span v-if="processing">
+                        <div v-if="! processing">
+                          <button class="add button" @click="newJob">
+                              New job
+                          </button>
+                          <button class="remove button" v-if="jobs.length >= 5" @click="removeJobs">
+                              Clear
+                          </button>
+                        </div>
+                        <div v-if="processing">
                             <div class="spinner">
                                 <div class="double-bounce1"></div>
                                 <div class="double-bounce2"></div>
                             </div>
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div>

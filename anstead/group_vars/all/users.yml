@@ -13,22 +13,7 @@ users:
       - sudo
     keys:
       - https://github.com/ptibbetts.keys
-  - name: kamil
-    groups:
-      - "{{ web_group }}"
-    keys:
-      - https://github.com/kamilmieczakowski.keys
-  - name: vroobs
-    groups:
-      - "{{ web_group }}"
-    keys:
-      - https://github.com/vroobs.keys
-  - name: ricky
-    groups:
-      - "{{ web_group }}"
-    keys:
-      - https://github.com/rickyshafier.keys
-
+  
 web_user: web
 web_group: www-data
 web_sudoers:

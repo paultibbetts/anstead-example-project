@@ -24,13 +24,13 @@
 # into the Vagrantfile's `config.vm.provision` section.
 
 [development]
-192.168.50.20 ansible_connection=local
+192.168.50.6 ansible_connection=local
 
 [web]
-192.168.50.20 ansible_connection=local
+192.168.50.6 ansible_connection=local
 
 [database]
-192.168.50.20 ansible_connection=local
+192.168.50.6 ansible_connection=local
 
 [redis]
-192.168.50.20 ansible_connection=local
+192.168.50.6 ansible_connection=local

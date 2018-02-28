@@ -14,7 +14,7 @@
   command: rsync -ac --info=NAME /tmp/{{ item.key }}.env {{ www_root }}/{{ item.key }}/current/.env
   with_dict: "{{ laravel_apps }}"
   register: env_file
-  changed_when: env_file.stdout == "{{ item.key }}.env"
+  changed_when: env_file.stdout == item.key + '.env'
 
 - name: Install Dependencies with Composer
   composer:
@@ -22,4 +22,12 @@
     optimize_autoloader: no
     working_dir: "{{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}/"
   become: no
+  with_dict: "{{ laravel_apps }}"
+
+- name: Run the migrations
+  command: "/usr/bin/php artisan migrate --force chdir={{ www_root }}/{{ item.key }}/current"
+  with_dict: "{{ laravel_apps }}"
+
+- name: Generate app key
+  command: "/usr/bin/php artisan key:generate chdir={{ www_root }}/{{ item.key }}/{{ item.value.current_path | default('current') }}"
   with_dict: "{{ laravel_apps }}"

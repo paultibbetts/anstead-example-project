@@ -2,15 +2,19 @@
 laravel_apps:
   example.com:
     site_hosts:
-      - canonical: example.com
+      - canonical: anstead-example-project.com
         redirects:
-          - www.example.com
-    local_path: ../laravel # path targeting local Bedrock site directory (relative to Ansible root)
-    repo: git@github.com:example/example.git # replace with your Git repo URL
-    repo_subtree_path: laravel # relative path to your Bedrock/WP directory in your repo
+          - www.anstead-example-project.com
+    local_path: ../laravel # path targeting local Laravel directory (relative to Ansible root)
+    repo: git@github.com:ptibbetts/anstead-example-project.git # replace with your Git repo URL
+    repo_subtree_path: laravel # relative path to your Laravel directory in your repo
     branch: master
     ssl:
       enabled: false 
       provider: letsencrypt
-    cache:
-      enabled: false
+    env:
+      app_key: "generate me" # artisan key:generate --show
+      # redis_host: "internal_ip_address" # defaults to localhost
+      # db_host: "internal_ip_address" # defaults to 127.0.0.1
+      
+      

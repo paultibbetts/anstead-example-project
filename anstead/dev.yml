@@ -10,7 +10,8 @@
     - { role: ferm, tags: [ferm] }
     - { role: ntp, tags: [ntp] }
     - { role: sshd, tags: [sshd] }
-    - { role: mariadb, tags: [mariadb] }
+    - { role: mariadb-client, tags: [mariadb, mariadb-client] }
+    - { role: mariadb-server, tags: [mariadb, mariadb-server] }
     - { role: mailhog, tags: [mailhog, mail] }
     - { role: php, tags: [php] }
     - { role: redis, tags: [redis] }
@@ -24,11 +25,6 @@
     - { role: laravel-install, tags: [laravel, laravel-install] }
 
   tasks:
-
-    - name: Run the migrations
-      command: "/usr/bin/php artisan migrate --force chdir={{ www_root }}/{{ item.key }}/current"
-      with_dict: "{{ laravel_apps }}"
-
     - name: Install Redis tools
       apt:
         name: redis-tools

@@ -5,4 +5,3 @@ web_user: vagrant
 
 # Define these variables in group_vars/development/vault.yml
 mysql_root_password: "{{ vault_mysql_root_password }}" 
-mysql_readonly_password: "{{ vault_mysql_readonly_password }}"

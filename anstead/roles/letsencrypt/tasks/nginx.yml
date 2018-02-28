@@ -35,7 +35,7 @@
   with_dict: "{{ laravel_apps }}"
   notify: disable temporary challenge sites
 
-- import_tasks: "{{ playbook_dir }}/roles/common/tasks/reload_nginx.yml"
+- import_tasks: "{{ playbook_dir }}/roles/shared/tasks/reload_nginx.yml"
   when: challenge_site_confs | changed or challenge_sites_enabled | changed
 
 - name: Create test Acme Challenge file

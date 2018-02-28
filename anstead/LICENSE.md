@@ -1,3 +1,5 @@
+Anstead is a fork of Trellis by the Roots team and so it uses the same license.
+
 Copyright (c) Roots
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of

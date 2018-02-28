@@ -1,25 +1,32 @@
 laravel_env_defaults:
+  app_name: Example
   app_env: "{{ env }}"
   app_debug: false
-  app_key: "{{ vault_app_key }}"
   app_url: https://example.com
+  log_channel: stack
   db_connection: mysql
+  db_host: localhost # override this in group_vars/environment/laravel_apps.yml
+  db_port: 3306
   db_database: "{{ site | underscore }}_{{ env }}"
   db_username: "{{ site | underscore }}"
-  db_password: "{{ vault_db_password }}"
-  db_host: "database.example.com"
-  db_port: 3306
+  broadcast_driver: log
   cache_driver: redis
   session_driver: redis
   queue_driver: redis
-  the_redis_host: "redis.example.com"
-  the_redis_password: "{{ vault_redis_password }}"
-  the_redis_port: 6379
-  mail_driver: sparkpost
-  sparkpost_secret: "{{ vault_sparkpost_secret }}"
-  authy_secret:
-  stripe_key: "{{ vault_stripe_key }}"
-  stripe_secret: "{{ vault_stripe_secret }}"
-
+  redis_host: 127.0.0.1 # override this in group_vars/environment/laravel_apps.yml
+  redis_password: "{{ vault_redis_password }}"
+  redis_port: 6379
+  mail_driver: smtp
+  mail_host: smtp.mailtrap.io
+  mail_port: 2525
+  mail_user: null
+  mail_password: null
+  mail_encryption: null
+  # pusher_app_id: 
+  # pusher_app_key: 
+  # pusher_app_secret:
+  # pusher_app_cluster: mt1
+  # mix_pusher_app_key:"${PUSHER_APP_KEY}"
+  # mix_pusher_app_cluster:"${PUSHER_APP_CLUSTER}"
 
 site_env: "{{ laravel_env_defaults | combine(project.env | default({}), vault_laravel_apps[site].env) }}"

@@ -3,14 +3,14 @@
 
 [production]
 example.com
-database-ip
-redis-ip
+ip_address_of_database_server
+ip_address_of_redis_server
 
 [web]
-example.com
+anstead-example-project.com
 
 [database]
-database-ip
+ip_address_of_database_server
 
 [redis]
-redis-ip
+ip_address_of_redis_server

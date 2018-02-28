@@ -1,9 +1,7 @@
+# You can generate passwords using `openssl rand -base64 16`
+
 vault_mysql_root_password: productionpw
-
 vault_redis_password: productionpw
-
-vault_stripe_key: stripekey
-vault_stripe_secret: stripesecret
 
 vault_users:
   - name: "{{ admin_user }}"
@@ -15,10 +13,5 @@ vault_users:
 vault_laravel_apps:
   example.com:
     env:
-      db_connection: mysql
-      db_host: "internal-ip"
-      db_port: "3306"
-      db_database: example_com_production
-      db_username: example
-      db_password: password
-      app_key: "generateme"
+      db_password: "password"
+      

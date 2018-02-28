@@ -16,19 +16,7 @@
       append_privs: yes
       priv: "{{ site_env.db_database }}.*:ALL"
       state: present
-      host: "%"
-      login_host: "localhost"
-      login_user: "{{ mysql_root_user }}"
-      login_password: "{{ mysql_root_password }}"
-    with_dict: "{{ laravel_apps }}"
-
-  - name: Create database user for reading from database
-    mysql_user:
-      name: reader
-      password: "{{ mysql_readonly_password }}"
-      append_privs: yes
-      priv: "{{ site_env.db_database }}.*:SELECT"
-      state: present
+      host: "{{ '%' if apps_using_remote_db else 'localhost' }}"
       login_host: "localhost"
       login_user: "{{ mysql_root_user }}"
       login_password: "{{ mysql_root_password }}"

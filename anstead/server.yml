@@ -1,7 +1,4 @@
-- import_playbook: variable-check.yml
-  vars:
-    playbook: common.yml
-
+---
 - name: Test Connection and Determine Remote User
   hosts: "{{ env }}"
   gather_facts: false
@@ -27,3 +24,5 @@
     - { role: ntp, tags: [ntp] }
     - { role: users, tags: [users] }
     - { role: sshd, tags: [sshd] }
+    - { role: ferm, tags: [ferm] }
+    

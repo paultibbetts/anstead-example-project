@@ -1,7 +1,7 @@
 ---
-vagrant_ip: '192.168.50.20'
+vagrant_ip: '192.168.50.6' # remember to also change the hosts/development file
 vagrant_cpus: 1
-vagrant_memory: 4096 # in MB
+vagrant_memory: 1024 # in MB
 vagrant_box: 'bento/ubuntu-16.04'
 vagrant_box_version: '<= 2.3.8'
 vagrant_ansible_version: '2.4.0'

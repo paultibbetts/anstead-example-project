@@ -13,7 +13,6 @@ php_extensions_default:
   - php7.1-opcache
   - php7.1-soap
   - php7.1-xml
-  # - php7.1-xmlrpc
   - php7.1-zip
 
 php_extensions_custom: []

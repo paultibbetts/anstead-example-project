@@ -1,24 +1,13 @@
 ---
-- import_playbook: common.yml
-- import_playbook: variable-check.yml
-  vars:
-    playbook: redis.yml
-
 - name: Redis
   hosts: redis:&{{ env }}
   become: yes
   vars:  
     ferm_input_list:
-    - type: dport_accept
-      dport: [ssh]
-      saddr: "{{ ip_whitelist }}"
-    - type: dport_limit
-      dport: [ssh]
-      seconds: 300
-      hits: 20
-    - type: dport_accept
-      dport: ["6379"]
-      filename: redis_accept
+      - type: dport_accept
+        dport: ["6379"]
+        filename: redis_accept
+        when: apps_using_remote_redis | count
   roles:
     - { role: ferm, tags: [ferm] }
     - { role: redis, tags: [redis] }

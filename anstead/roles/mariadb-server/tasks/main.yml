@@ -1,25 +1,13 @@
 ---
-- block:
-  - name: Add MariaDB APT key
-    apt_key:
-      keyserver: "{{ mariadb_keyserver }}"
-      id: "{{ mariadb_keyserver_id }}"
-
-  - name: Add MariaDB PPA
-    apt_repository:
-      repo: "{{ mariadb_ppa }}"
-      update_cache: yes
-
-- name: Install MySQL client
-  apt:
-    name: "{{ mariadb_client_package }}"
-    state: "{{ mariadb_client_package_state | default(apt_package_state) }}"
-    cache_valid_time: "{{ apt_cache_valid_time }}"
-
+- debug:
+    var: apps_using_remote_db
+- debug:
+    msg: "{{ apps_using_remote_db }}"
+    
 - block:
   - name: Install MySQL server
     apt:
-      name: "{{ mariadb_server_package }}"
+      name: mariadb-server
       state: "{{ mariadb_server_package_state | default(apt_package_state) }}"
       cache_valid_time: "{{ apt_cache_valid_time }}"
 
@@ -30,23 +18,6 @@
       owner: root
       group: root
     when: mysql_binary_logging_disabled
-
-  - name: Increase packet size
-    template:
-        src: increase-packet-size.cnf
-        dest: /etc/mysql/conf.d
-        owner: root
-        group: root
-
-  # lineinfile
-  # - name: Allow external connections
-  #   command: sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
-
-  - name: Restart MySQL Server
-    service:
-      name: mysql
-      state: restarted
-      enabled: true
     notify: restart mysql server
 
   - name: Set root user password
@@ -85,4 +56,21 @@
       name: test
       state: absent
 
-  when: not apps_using_remote_db | count
+  - name: Allow external connections
+    blockinfile:
+      path: ~/.my.cnf
+      block: |
+        [mysqld]
+        bind-address= 0.0.0.0
+    when: apps_using_remote_db | count
+    notify: restart mysql server
+
+  - name: Do not allow external connections
+    blockinfile:
+      path: ~/.my.cnf
+      block: |
+        [mysqld]
+        bind-address= 0.0.0.0
+      state: absent
+    when: not apps_using_remote_db | count
+    notify: restart mysql server
